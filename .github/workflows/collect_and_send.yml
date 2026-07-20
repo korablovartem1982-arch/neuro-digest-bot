@@ -1,0 +1,45 @@
+name: Collect & Send Offers
+
+on:
+  schedule:
+    - cron: '0 10 * * *'   # Каждый день в 10:00
+  workflow_dispatch:        # Можно запустить вручную
+
+jobs:
+  collect-and-send:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install telethon
+
+      - name: Collect users from groups
+        run: python scripts/collect_users.py
+        env:
+          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+          TELEGRAM_PHONE: ${{ secrets.TELEGRAM_PHONE }}
+
+      - name: Send offers to new users
+        run: python scripts/send_offers.py
+        env:
+          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+          TELEGRAM_PHONE: ${{ secrets.TELEGRAM_PHONE }}
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add collected_users.txt sent_users.txt 2>/dev/null || true
+          git commit -m "Обновление списка контактов [skip ci]" 2>/dev/null || true
+          git push 2>/dev/null || true
