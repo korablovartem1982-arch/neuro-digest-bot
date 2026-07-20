@@ -50,7 +50,7 @@ parse_ria() {
 parse_tass() {
     echo "📌 ТАСС (Главное):"
     curl -s --max-time 5 'https://tass.ru/rss/v2.xml' > /tmp/tass.xml 2>/dev/null
-    grep '<title>' /tmp/tass.xml | grep -v 'ТАСС' | sed 's/<title>//g' | sed 's/<\/title>//g' | head -5 | while read title; do
+    grep '<title>' /tmp/tass.xml | grep -v 'ТАСС' | sed 's/<title>//g' | sed 's/<\/title>//g' | sed 's/<item>//g' | head -5 | while read title; do
         echo "  • $title"
     done
     echo ""
