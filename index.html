@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroDigest — персональный дайджест новостей</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e17;
+            color: #e0e7f0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ШАПКА */
+        .header {
+            padding: 30px 0 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #7b2ffc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo span {
+            font-weight: 300;
+            -webkit-text-fill-color: #8899aa;
+        }
+
+        .header-badge {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            color: #00d4ff;
+        }
+
+        /* ГЕРОЙ */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #8899aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #8899aa;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero .stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero .stat-item {
+            text-align: center;
+        }
+
+        .hero .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+
+        .hero .stat-label {
+            font-size: 14px;
+            color: #556677;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 48px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff, #7b2ffc);
+            color: #fff;
+            box-shadow: 0 4px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: #e0e7f0;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-left: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* БЛОКИ */
+        .section {
+            padding: 80px 0;
+            border-top: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 50px;
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, #00d4ff, #7b2ffc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px 25px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #8899aa;
+            font-size: 16px;
+        }
+
+        /* ИСТОЧНИКИ */
+        .sources {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .source {
+            font-size: 18px;
+            font-weight: 600;
+            color: #8899aa;
+        }
+
+        .source::before {
+            content: "▸ ";
+            color: #00d4ff;
+        }
+
+        /* ТАРИФЫ */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pricing-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.popular {
+            border-color: #00d4ff;
+            background: rgba(0, 212, 255, 0.05);
+            position: relative;
+        }
+
+        .pricing-card.popular::before {
+            content: "★ САМЫЙ ПОПУЛЯРНЫЙ";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #00d4ff;
+            color: #0a0e17;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 20px;
+            border-radius: 50px;
+        }
+
+        .pricing-card .price {
+            font-size: 48px;
+            font-weight: 800;
+            color: #fff;
+            margin: 15px 0 5px;
+        }
+
+        .pricing-card .price span {
+            font-size: 18px;
+            font-weight: 400;
+            color: #8899aa;
+        }
+
+        .pricing-card .sub {
+            color: #556677;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .pricing-card .features {
+            list-style: none;
+            text-align: left;
+            margin: 20px 0 30px;
+        }
+
+        .pricing-card .features li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: #8899aa;
+        }
+
+        .pricing-card .features li::before {
+            content: "✅ ";
+            color: #00d4ff;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 80px 0 100px;
+            background: linear-gradient(180deg, transparent, rgba(0, 212, 255, 0.03));
+        }
+
+        .cta-section h2 {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            color: #8899aa;
+            font-size: 18px;
+            margin-bottom: 35px;
+        }
+
+        /* ПОДВАЛ */
+        .footer {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            color: #445566;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        /* АНИМАЦИИ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ШАПКА -->
+        <header class="header">
+            <div class="logo">Neuro<span>Digest</span></div>
+            <div class="header-badge">🤖 работает 24/7</div>
+        </header>
+
+        <!-- ГЕРОЙ -->
+        <section class="hero">
+            <h1>Ваш личный дайджест<br>новостей каждое утро</h1>
+            <p>Экономьте 2 часа в день. Мы собираем главные новости по вашей теме из 4 источников и присылаем в Telegram в 8:00.</p>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">3487</div>
+                    <div class="stat-label">собрано контактов</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1222</div>
+                    <div class="stat-label">отправлено дайджестов</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">дней бесплатно</div>
+                </div>
+            </div>
+
+            <div class="hero-buttons">
+                <a href="https://t.me/neuro_digest_2026_bot" target="_blank" class="btn btn-primary">🚀 Начать бесплатно</a>
+                <a href="#pricing" class="btn btn-secondary">Подробнее</a>
+            </div>
+        </section>
+
+        <!-- ПРЕИМУЩЕСТВА -->
+        <section class="section">
+            <h2 class="section-title">Почему <span>NeuroDigest</span>?</h2>
+            <div class="grid-3">
+                <div class="card animate delay-1">
+                    <div class="card-icon">📰</div>
+                    <h3>4 источника</h3>
+                    <p>Хабр, Lenta, РИА Новости, ТАСС — только проверенные и актуальные.</p>
+                </div>
+                <div class="card animate delay-2">
+                    <div class="card-icon">🎯</div>
+                    <h3>Персональные темы</h3>
+                    <p>Выбирайте темы, которые интересны именно вам. Никакого мусора.</p>
+                </div>
+                <div class="card animate delay-3">
+                    <div class="card-icon">⏰</div>
+                    <h3>В 8:00 каждое утро</h3>
+                    <p>Привыкайте начинать день с главного. Без опозданий и пропусков.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ИСТОЧНИКИ -->
+        <section class="section">
+            <h2 class="section-title">Источники <span>новостей</span></h2>
+            <div class="sources">
+                <span class="source">Habr</span>
+                <span class="source">Lenta</span>
+                <span class="source">РИА Новости</span>
+                <span class="source">ТАСС</span>
+            </div>
+        </section>
+
+        <!-- ПРИМЕР ДАЙДЖЕСТА -->
+        <section class="section">
+            <h2 class="section-title">Как выглядит <span>дайджест</span></h2>
+            <div style="max-width: 500px; margin: 0 auto; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px; border: 1px solid rgba(255,255,255,0.05);">
+                <div style="color: #00d4ff; font-size: 14px;">=== 🤖 ДАЙДЖЕСТ ПО ТЕМЕ: нейросети ===</div>
+                <div style="margin: 15px 0; color: #8899aa;">
+                    <div>📌 ХАБР (нейросети):</div>
+                    <div style="padding-left: 15px; color: #e0e7f0; font-size: 14px;">
+                        • Как OpenRouter Fusion обошёл Claude Fable 5<br>
+                        • Искусственный интеллект и нейросети: третий выпуск подкаста<br>
+                        • Нейросети по типу DALL-E 2 запоминают изображения
+                    </div>
+                </div>
+                <div style="margin: 15px 0; color: #8899aa;">
+                    <div>📌 ПОЛЕЗНЫЕ ССЫЛКИ:</div>
+                    <div style="padding-left: 15px; color: #00d4ff; font-size: 14px; word-break: break-all;">
+                        • habr.com/ru/articles/1058930/<br>
+                        • habr.com/ru/news/651211/
+                    </div>
+                </div>
+                <div style="color: #445566; font-size: 12px;">📅 19:19 20.07.2026</div>
+            </div>
+        </section>
+
+        <!-- ТАРИФЫ -->
+        <section class="section" id="pricing">
+            <h2 class="section-title">Выберите <span>тариф</span></h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Бесплатный</h3>
+                    <div class="price">0 <span>€</span></div>
+                    <div class="sub">7 дней</div>
+                    <ul class="features">
+                        <li>Ежедневный дайджест</li>
+                        <li>Все 4 источника</li>
+                        <li>1 тема на выбор</li>
+                        <li>Отписка в один клик</li>
+                    </ul>
+                    <a href="https://t.me/neuro_digest_2026_bot" target="_blank" class="btn btn-secondary">Попробовать</a>
+                </div>
+
+                <div class="pricing-card popular">
+                    <h3>Премиум</h3>
+                    <div class="price">50 <span>€</span></div>
+                    <div class="sub">в месяц</div>
+                    <ul class="features">
+                        <li>Всё из бесплатного</li>
+                        <li>До 3 тем одновременно</li>
+                        <li>Приоритетная поддержка</li>
+                        <li>Отключение в любой момент</li>
+                    </ul>
+                    <a href="https://t.me/neuro_digest_2026_bot" target="_blank" class="btn btn-primary">Подключить</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ПРИЗЫВ К ДЕЙСТВИЮ -->
+        <section class="cta-section">
+            <h2>Начните получать <span style="background: linear-gradient(135deg, #00d4ff, #7b2ffc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">главное</span> каждое утро</h2>
+            <p>Присоединяйтесь к 1222 пользователям. Первая неделя — в подарок.</p>
+            <a href="https://t.me/neuro_digest_2026_bot" target="_blank" class="btn btn-primary" style="font-size: 22px; padding: 18px 60px;">👉 Перейти в бота</a>
+        </section>
+
+        <!-- ПОДВАЛ -->
+        <footer class="footer">
+            <p>© 2026 NeuroDigest. Сделано с ❤️ для умных людей.</p>
+            <p style="margin-top: 5px;">
+                <a href="https://t.me/neuro_digest_2026_bot">@neuro_digest_2026_bot</a>
+            </p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
