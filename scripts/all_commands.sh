@@ -7,8 +7,8 @@ LOG_FILE="$LOG_DIR/parser_$(date +%Y-%m-%d).log"
 # ========================
 
 # ===== НАСТРОЙКИ =====
-TOKEN="8065533225:AAEBrrrE8pjzQlJX-82ylZYupIPp5_iWKAA"
-CHAT_ID="8321244612"
+TOKEN="${TELEGRAM_TOKEN:-8065533225:AAEBrrrE8pjzQlJX-82ylZYupIPp5_iWKAA}"
+CHAT_ID="${TELEGRAM_CHAT_ID:-8321244612}"
 # ======================
 
 # Функция логирования
@@ -36,7 +36,27 @@ parse_lenta() {
     echo ""
 }
 
-# 3. ССЫЛКИ С ХАБР
+# 3. ПАРСЕР РИА НОВОСТИ (RSS)
+parse_ria() {
+    echo "📌 РИА НОВОСТИ (Главное):"
+    curl -s --max-time 5 'https://ria.ru/export/rss2/index.xml' > /tmp/ria.xml 2>/dev/null
+    grep '<title>' /tmp/ria.xml | grep -v 'РИА Новости' | sed 's/<title>//g' | sed 's/<\/title>//g' | head -5 | while read title; do
+        echo "  • $title"
+    done
+    echo ""
+}
+
+# 4. ПАРСЕР ТАСС (RSS)
+parse_tass() {
+    echo "📌 ТАСС (Главное):"
+    curl -s --max-time 5 'https://tass.ru/rss/v2.xml' > /tmp/tass.xml 2>/dev/null
+    grep '<title>' /tmp/tass.xml | grep -v 'ТАСС' | sed 's/<title>//g' | sed 's/<\/title>//g' | head -5 | while read title; do
+        echo "  • $title"
+    done
+    echo ""
+}
+
+# 5. ССЫЛКИ С ХАБР
 parse_links() {
     echo "📌 ПОЛЕЗНЫЕ ССЫЛКИ:"
     grep '<link>' /tmp/rss.xml | grep -v '/ru/$' | sed 's/<link>//g' | sed 's/<\/link>//g' | grep 'articles\|news' | head -5 | sed 's/?utm_source.*//' | while read link; do
@@ -45,19 +65,21 @@ parse_links() {
     echo ""
 }
 
-# 4. ГЕНЕРАЦИЯ ОТЧЕТА
+# 6. ГЕНЕРАЦИЯ ОТЧЕТА
 generate_report() {
     REPORT="/tmp/digest.txt"
     echo "=== 🤖 ДАЙДЖЕСТ НОВОСТЕЙ О НЕЙРОСЕТЯХ $(date '+%d.%m.%Y %H:%M') ===" > $REPORT
     echo "" >> $REPORT
     parse_habr >> $REPORT
     parse_lenta >> $REPORT
+    parse_ria >> $REPORT
+    parse_tass >> $REPORT
     parse_links >> $REPORT
     echo "📅 $(date '+%H:%M %d.%m.%Y')" >> $REPORT
     echo "$REPORT"
 }
 
-# 5. ОТПРАВКА В TELEGRAM (с логированием)
+# 7. ОТПРАВКА В TELEGRAM (с логированием)
 send_to_telegram() {
     log_message "Запуск отправки"
     
@@ -78,7 +100,7 @@ send_to_telegram() {
     fi
 }
 
-# 6. ГЛАВНАЯ ФУНКЦИЯ
+# 8. ГЛАВНАЯ ФУНКЦИЯ
 main() {
     case "$1" in
         habr)
@@ -86,6 +108,12 @@ main() {
             ;;
         lenta)
             parse_lenta
+            ;;
+        ria)
+            parse_ria
+            ;;
+        tass)
+            parse_tass
             ;;
         report)
             REPORT=$(generate_report)
@@ -107,6 +135,8 @@ main() {
             echo "Использование:"
             echo "  ./all_commands.sh habr   - Только Хабр"
             echo "  ./all_commands.sh lenta  - Только Lenta"
+            echo "  ./all_commands.sh ria    - Только РИА Новости"
+            echo "  ./all_commands.sh tass   - Только ТАСС"
             echo "  ./all_commands.sh report - Показать отчет"
             echo "  ./all_commands.sh send   - Отправить отчет в Telegram"
             echo "  ./all_commands.sh all    - Полный цикл"
