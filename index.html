@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroDigest — персональный дайджест новостей</title>
+    <title>NeuroDigest — создание лендингов и сбор баз данных</title>
     <style>
         * {
             margin: 0;
@@ -58,7 +58,7 @@
 
         /* ГЕРОЙ */
         .hero {
-            padding: 80px 0 60px;
+            padding: 60px 0 40px;
             text-align: center;
         }
 
@@ -145,7 +145,7 @@
 
         /* БЛОКИ */
         .section {
-            padding: 80px 0;
+            padding: 60px 0;
             border-top: 1px solid rgba(255,255,255,0.03);
         }
 
@@ -180,6 +180,7 @@
             border-radius: 16px;
             padding: 30px 25px;
             transition: all 0.3s ease;
+            text-align: center;
         }
 
         .card:hover {
@@ -188,13 +189,14 @@
         }
 
         .card-icon {
-            font-size: 40px;
+            font-size: 48px;
             margin-bottom: 15px;
         }
 
         .card h3 {
             font-size: 20px;
             margin-bottom: 10px;
+            color: #fff;
         }
 
         .card p {
@@ -202,134 +204,130 @@
             font-size: 16px;
         }
 
-        /* ИСТОЧНИКИ */
-        .sources {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            background: rgba(255,255,255,0.02);
-            border-radius: 16px;
-            padding: 40px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .source {
-            font-size: 18px;
-            font-weight: 600;
-            color: #8899aa;
-        }
-
-        .source::before {
-            content: "▸ ";
+        .card .price {
+            font-size: 24px;
+            font-weight: 700;
             color: #00d4ff;
+            margin: 15px 0 5px;
         }
 
-        /* ТАРИФЫ */
-        .pricing-grid {
+        .card .price span {
+            font-size: 16px;
+            font-weight: 400;
+            color: #556677;
+        }
+
+        .card .btn-small {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            text-decoration: none;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .card .btn-small:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* КОНТАКТЫ */
+        .contacts-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            max-width: 700px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
-        @media (max-width: 600px) {
-            .pricing-grid {
+        @media (max-width: 700px) {
+            .contacts-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 400px) {
+            .contacts-grid {
                 grid-template-columns: 1fr;
             }
         }
 
-        .pricing-card {
+        .contact-item {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 40px 30px;
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
             transition: all 0.3s ease;
+            text-decoration: none;
+            color: #e0e7f0;
         }
 
-        .pricing-card:hover {
-            transform: translateY(-5px);
+        .contact-item:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-3px);
         }
 
-        .pricing-card.popular {
-            border-color: #00d4ff;
-            background: rgba(0, 212, 255, 0.05);
-            position: relative;
+        .contact-item .icon {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 8px;
         }
 
-        .pricing-card.popular::before {
-            content: "★ САМЫЙ ПОПУЛЯРНЫЙ";
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #00d4ff;
-            color: #0a0e17;
+        .contact-item .label {
             font-size: 12px;
-            font-weight: 700;
-            padding: 4px 20px;
-            border-radius: 50px;
-        }
-
-        .pricing-card .price {
-            font-size: 48px;
-            font-weight: 800;
-            color: #fff;
-            margin: 15px 0 5px;
-        }
-
-        .pricing-card .price span {
-            font-size: 18px;
-            font-weight: 400;
-            color: #8899aa;
-        }
-
-        .pricing-card .sub {
             color: #556677;
+            margin-bottom: 5px;
+        }
+
+        .contact-item .value {
             font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        .pricing-card .features {
-            list-style: none;
-            text-align: left;
-            margin: 20px 0 30px;
-        }
-
-        .pricing-card .features li {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            color: #8899aa;
-        }
-
-        .pricing-card .features li::before {
-            content: "✅ ";
+            font-weight: 600;
             color: #00d4ff;
         }
 
-        .pricing-card .btn {
+        /* ФОРМА */
+        .form-box {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 40px;
+        }
+
+        .form-box input,
+        .form-box textarea {
             width: 100%;
-            text-align: center;
-        }
-
-        /* CTA */
-        .cta-section {
-            text-align: center;
-            padding: 80px 0 100px;
-            background: linear-gradient(180deg, transparent, rgba(0, 212, 255, 0.03));
-        }
-
-        .cta-section h2 {
-            font-size: 40px;
+            padding: 14px 18px;
             margin-bottom: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #e0e7f0;
+            font-size: 16px;
+            transition: all 0.3s ease;
         }
 
-        .cta-section p {
-            color: #8899aa;
-            font-size: 18px;
-            margin-bottom: 35px;
+        .form-box input:focus,
+        .form-box textarea:focus {
+            outline: none;
+            border-color: #00d4ff;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .form-box textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .form-box .btn {
+            width: 100%;
         }
 
         /* ПОДВАЛ */
@@ -344,6 +342,25 @@
         .footer a {
             color: #00d4ff;
             text-decoration: none;
+        }
+
+        .footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer .social-links a {
+            color: #556677;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer .social-links a:hover {
+            color: #00d4ff;
         }
 
         /* АНИМАЦИИ */
@@ -365,6 +382,8 @@
         .delay-1 { animation-delay: 0.1s; }
         .delay-2 { animation-delay: 0.2s; }
         .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
     </style>
 </head>
 <body>
@@ -374,13 +393,13 @@
         <!-- ШАПКА -->
         <header class="header">
             <div class="logo">Neuro<span>Digest</span></div>
-            <div class="header-badge">🤖 работает 24/7</div>
+            <div class="header-badge">🚀 создаю продающие лендинги</div>
         </header>
 
         <!-- ГЕРОЙ -->
         <section class="hero">
-            <h1>Ваш личный дайджест<br>новостей каждое утро</h1>
-            <p>Экономьте 2 часа в день. Мы собираем главные новости по вашей теме из 4 источников и присылаем в Telegram в 8:00.</p>
+            <h1>Создам продающий лендинг за 3 дня</h1>
+            <p>🔥 Блогеры, эксперты, стартапы — ваш личный цифровой помощник.<br>Лендинг + Telegram-бот + сбор базы клиентов.</p>
 
             <div class="stats">
                 <div class="stat-item">
@@ -389,121 +408,172 @@
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">1222</div>
-                    <div class="stat-label">отправлено дайджестов</div>
+                    <div class="stat-label">отправлено предложений</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">7</div>
-                    <div class="stat-label">дней бесплатно</div>
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">создано лендингов</div>
                 </div>
             </div>
 
             <div class="hero-buttons">
-                <a href="https://t.me/neuro_digest_2026_bot" target="_blank" class="btn btn-primary">🚀 Начать бесплатно</a>
-                <a href="#pricing" class="btn btn-secondary">Подробнее</a>
+                <a href="#services" class="btn btn-primary">💰 Заказать лендинг</a>
+                <a href="#contacts" class="btn btn-secondary">📱 Связаться</a>
+            </div>
+        </section>
+
+        <!-- УСЛУГИ -->
+        <section class="section" id="services">
+            <h2 class="section-title">Мои <span>услуги</span></h2>
+            <div class="grid-3">
+                <div class="card animate delay-1">
+                    <div class="card-icon">📄</div>
+                    <h3>Лендинг-визитка</h3>
+                    <p>Одностраничный сайт с вашими услугами, контактами и портфолио.</p>
+                    <div class="price">149 <span>€</span></div>
+                    <a href="#form" class="btn-small">Заказать</a>
+                </div>
+
+                <div class="card animate delay-2">
+                    <div class="card-icon">🚀</div>
+                    <h3>Продающий лендинг</h3>
+                    <p>Структура продаж, триггеры, формы заявок, отзывы и кейсы.</p>
+                    <div class="price">299 <span>€</span></div>
+                    <a href="#form" class="btn-small">Заказать</a>
+                </div>
+
+                <div class="card animate delay-3">
+                    <div class="card-icon">🤖</div>
+                    <h3>Лендинг + Telegram-бот</h3>
+                    <p>Автоматический приём заявок, уведомления в Telegram, CRM.</p>
+                    <div class="price">499 <span>€</span></div>
+                    <a href="#form" class="btn-small">Заказать</a>
+                </div>
+
+                <div class="card animate delay-4">
+                    <div class="card-icon">📊</div>
+                    <h3>Сбор базы контактов</h3>
+                    <p>Соберу базу клиентов под ваш бизнес из Telegram, соцсетей и форумов.</p>
+                    <div class="price">199 <span>€</span></div>
+                    <a href="#form" class="btn-small">Заказать</a>
+                </div>
+
+                <div class="card animate delay-5">
+                    <div class="card-icon">📰</div>
+                    <h3>Готовый бизнес</h3>
+                    <p>NeuroDigest — лендинг + бот + дайджест + база 3487 контактов.</p>
+                    <div class="price">699 <span>€</span></div>
+                    <a href="#form" class="btn-small">Купить</a>
+                </div>
+
+                <div class="card animate delay-6">
+                    <div class="card-icon">⚡</div>
+                    <h3>Консультация</h3>
+                    <p>Бесплатный разбор вашего проекта и рекомендации по продажам.</p>
+                    <div class="price">0 <span>€</span></div>
+                    <a href="#contacts" class="btn-small">Написать</a>
+                </div>
             </div>
         </section>
 
         <!-- ПРЕИМУЩЕСТВА -->
         <section class="section">
-            <h2 class="section-title">Почему <span>NeuroDigest</span>?</h2>
+            <h2 class="section-title">Почему <span>стоит заказать</span></h2>
             <div class="grid-3">
                 <div class="card animate delay-1">
-                    <div class="card-icon">📰</div>
-                    <h3>4 источника</h3>
-                    <p>Хабр, Lenta, РИА Новости, ТАСС — только проверенные и актуальные.</p>
+                    <div class="card-icon">⏱️</div>
+                    <h3>Быстро</h3>
+                    <p>Готовый лендинг через 3 дня. Никаких долгих согласований.</p>
                 </div>
                 <div class="card animate delay-2">
                     <div class="card-icon">🎯</div>
-                    <h3>Персональные темы</h3>
-                    <p>Выбирайте темы, которые интересны именно вам. Никакого мусора.</p>
+                    <h3>Продаёт</h3>
+                    <p>Тексты и структура, которые превращают посетителей в клиентов.</p>
                 </div>
                 <div class="card animate delay-3">
-                    <div class="card-icon">⏰</div>
-                    <h3>В 8:00 каждое утро</h3>
-                    <p>Привыкайте начинать день с главного. Без опозданий и пропусков.</p>
+                    <div class="card-icon">🔧</div>
+                    <h3>Под ключ</h3>
+                    <p>Хостинг, домен, настройка — всё включено. Просто работайте.</p>
                 </div>
             </div>
         </section>
 
-        <!-- ИСТОЧНИКИ -->
-        <section class="section">
-            <h2 class="section-title">Источники <span>новостей</span></h2>
-            <div class="sources">
-                <span class="source">Habr</span>
-                <span class="source">Lenta</span>
-                <span class="source">РИА Новости</span>
-                <span class="source">ТАСС</span>
-            </div>
-        </section>
-
-        <!-- ПРИМЕР ДАЙДЖЕСТА -->
-        <section class="section">
-            <h2 class="section-title">Как выглядит <span>дайджест</span></h2>
-            <div style="max-width: 500px; margin: 0 auto; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px; border: 1px solid rgba(255,255,255,0.05);">
-                <div style="color: #00d4ff; font-size: 14px;">=== 🤖 ДАЙДЖЕСТ ПО ТЕМЕ: нейросети ===</div>
-                <div style="margin: 15px 0; color: #8899aa;">
-                    <div>📌 ХАБР (нейросети):</div>
-                    <div style="padding-left: 15px; color: #e0e7f0; font-size: 14px;">
-                        • Как OpenRouter Fusion обошёл Claude Fable 5<br>
-                        • Искусственный интеллект и нейросети: третий выпуск подкаста<br>
-                        • Нейросети по типу DALL-E 2 запоминают изображения
-                    </div>
+        <!-- ПРИМЕРЫ РАБОТ -->
+        <section class="section" id="portfolio">
+            <h2 class="section-title">Мои <span>работы</span></h2>
+            <div class="grid-3">
+                <div class="card" style="border-color: rgba(0,212,255,0.1);">
+                    <div class="card-icon">📊</div>
+                    <h3>NeuroDigest</h3>
+                    <p>Лендинг для бота-дайджеста новостей. Сбор заявок и продажа подписки.</p>
+                    <a href="https://korablovartem1982-arch.github.io/neuro-digest-bot/" target="_blank" class="btn-small" style="margin-top: 10px;">Посмотреть →</a>
                 </div>
-                <div style="margin: 15px 0; color: #8899aa;">
-                    <div>📌 ПОЛЕЗНЫЕ ССЫЛКИ:</div>
-                    <div style="padding-left: 15px; color: #00d4ff; font-size: 14px; word-break: break-all;">
-                        • habr.com/ru/articles/1058930/<br>
-                        • habr.com/ru/news/651211/
-                    </div>
+                <div class="card" style="border-color: rgba(0,212,255,0.05); opacity: 0.5;">
+                    <div class="card-icon">🔄</div>
+                    <h3>Ваш проект</h3>
+                    <p>Здесь может быть ваш лендинг. Оставьте заявку, и я создам его!</p>
+                    <a href="#form" class="btn-small" style="margin-top: 10px;">Заказать</a>
                 </div>
-                <div style="color: #445566; font-size: 12px;">📅 19:19 20.07.2026</div>
-            </div>
-        </section>
-
-        <!-- ТАРИФЫ -->
-        <section class="section" id="pricing">
-            <h2 class="section-title">Выберите <span>тариф</span></h2>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Бесплатный</h3>
-                    <div class="price">0 <span>€</span></div>
-                    <div class="sub">7 дней</div>
-                    <ul class="features">
-                        <li>Ежедневный дайджест</li>
-                        <li>Все 4 источника</li>
-                        <li>1 тема на выбор</li>
-                        <li>Отписка в один клик</li>
-                    </ul>
-                    <a href="https://t.me/neuro_digest_2026_bot" target="_blank" class="btn btn-secondary">Попробовать</a>
-                </div>
-
-                <div class="pricing-card popular">
-                    <h3>Премиум</h3>
-                    <div class="price">50 <span>€</span></div>
-                    <div class="sub">в месяц</div>
-                    <ul class="features">
-                        <li>Всё из бесплатного</li>
-                        <li>До 3 тем одновременно</li>
-                        <li>Приоритетная поддержка</li>
-                        <li>Отключение в любой момент</li>
-                    </ul>
-                    <a href="https://t.me/neuro_digest_2026_bot" target="_blank" class="btn btn-primary">Подключить</a>
+                <div class="card" style="border-color: rgba(0,212,255,0.05); opacity: 0.5;">
+                    <div class="card-icon">🔄</div>
+                    <h3>Ваш проект</h3>
+                    <p>Здесь может быть ваш лендинг. Оставьте заявку, и я создам его!</p>
+                    <a href="#form" class="btn-small" style="margin-top: 10px;">Заказать</a>
                 </div>
             </div>
         </section>
 
-        <!-- ПРИЗЫВ К ДЕЙСТВИЮ -->
-        <section class="cta-section">
-            <h2>Начните получать <span style="background: linear-gradient(135deg, #00d4ff, #7b2ffc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">главное</span> каждое утро</h2>
-            <p>Присоединяйтесь к 1222 пользователям. Первая неделя — в подарок.</p>
-            <a href="https://t.me/neuro_digest_2026_bot" target="_blank" class="btn btn-primary" style="font-size: 22px; padding: 18px 60px;">👉 Перейти в бота</a>
+        <!-- ФОРМА ЗАЯВКИ -->
+        <section class="section" id="form">
+            <h2 class="section-title">Оставьте <span>заявку</span></h2>
+            <div class="form-box">
+                <form action="https://formsubmit.co/korablovartem1982@gmail.com" method="POST">
+                    <input type="text" name="name" placeholder="Ваше имя" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="text" name="phone" placeholder="Телефон / Telegram">
+                    <textarea name="message" placeholder="Расскажите о вашем проекте, что нужно создать..."></textarea>
+                    <button type="submit" class="btn btn-primary">📩 Отправить заявку</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- КОНТАКТЫ -->
+        <section class="section" id="contacts">
+            <h2 class="section-title">Свяжитесь <span>со мной</span></h2>
+            <div class="contacts-grid">
+                <a href="mailto:korablovartem1982@gmail.com" class="contact-item">
+                    <span class="icon">📧</span>
+                    <div class="label">Email</div>
+                    <div class="value">korablovartem1982@gmail.com</div>
+                </a>
+                <a href="https://t.me/korablovartem1982" target="_blank" class="contact-item">
+                    <span class="icon">✈️</span>
+                    <div class="label">Telegram</div>
+                    <div class="value">@korablovartem1982</div>
+                </a>
+                <a href="https://wa.me/38669846579" target="_blank" class="contact-item">
+                    <span class="icon">📱</span>
+                    <div class="label">WhatsApp</div>
+                    <div class="value">+386 69 846 579</div>
+                </a>
+                <a href="https://t.me/neuro_digest_2026_bot" target="_blank" class="contact-item">
+                    <span class="icon">🤖</span>
+                    <div class="label">Мой бот</div>
+                    <div class="value">@neuro_digest_2026_bot</div>
+                </a>
+            </div>
         </section>
 
         <!-- ПОДВАЛ -->
         <footer class="footer">
+            <div class="social-links">
+                <a href="https://github.com/korablovartem1982-arch" target="_blank">GitHub</a>
+                <a href="https://t.me/korablovartem1982" target="_blank">Telegram</a>
+                <a href="mailto:korablovartem1982@gmail.com">Email</a>
+            </div>
             <p>© 2026 NeuroDigest. Сделано с ❤️ для умных людей.</p>
-            <p style="margin-top: 5px;">
-                <a href="https://t.me/neuro_digest_2026_bot">@neuro_digest_2026_bot</a>
+            <p style="margin-top: 5px; font-size: 12px; color: #334455;">
+                Лендинги • Боты • Базы данных • Автоматизация
             </p>
         </footer>
 
