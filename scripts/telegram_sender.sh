@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # ===== НАСТРОЙКИ =====
-TOKEN="8065533225:AAEBrrrE8pjzQlJX-82ylZYupIPp5_iWKAA"
-CHAT_ID="8321244612"
+TOKEN="${TELEGRAM_TOKEN:-}"
+CHAT_ID="${TELEGRAM_CHAT_ID:-}"
 # =====================
 
 REPORT="digest.txt"
