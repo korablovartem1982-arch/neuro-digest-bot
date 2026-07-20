@@ -1,0 +1,15 @@
+# Временные файлы
+temp/
+*.html
+*.xml
+*.txt
+!README.md
+!COMMANDS.md
+!*.sh
+
+# Логи
+logs/
+*.log
+
+# Отчёты (если не хочешь хранить в git)
+reports/
