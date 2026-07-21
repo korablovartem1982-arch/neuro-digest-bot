@@ -5,32 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeuroDigest — landing pages & Telegram bots</title>
     <style>
-        /* Копируйте стили из index.html */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0e17; color: #e0e7f0; line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .header { padding: 30px 0 20px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-size: 24px; font-weight: 700; background: linear-gradient(135deg, #00d4ff, #7b2ffc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo span { font-weight: 300; -webkit-text-fill-color: #8899aa; }
+        .header-badge { background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.2); padding: 8px 20px; border-radius: 50px; font-size: 14px; color: #00d4ff; }
+        .hero { padding: 60px 0 40px; text-align: center; }
+        .hero h1 { font-size: 48px; font-weight: 800; line-height: 1.2; margin-bottom: 20px; background: linear-gradient(135deg, #ffffff 0%, #8899aa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 20px; color: #8899aa; max-width: 600px; margin: 0 auto 40px; }
+        .hero .stats { display: flex; justify-content: center; gap: 50px; margin-bottom: 40px; flex-wrap: wrap; }
+        .hero .stat-item { text-align: center; }
+        .hero .stat-number { font-size: 36px; font-weight: 700; color: #00d4ff; }
+        .hero .stat-label { font-size: 14px; color: #556677; }
+        .btn { display: inline-block; padding: 16px 48px; border-radius: 50px; font-size: 18px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; border: none; cursor: pointer; }
+        .btn-primary { background: linear-gradient(135deg, #00d4ff, #7b2ffc); color: #fff; box-shadow: 0 4px 30px rgba(0, 212, 255, 0.3); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(0, 212, 255, 0.4); }
+        .btn-secondary { background: rgba(255,255,255,0.05); color: #e0e7f0; border: 1px solid rgba(255,255,255,0.1); margin-left: 15px; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+        .hero-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; }
+        .section { padding: 60px 0; border-top: 1px solid rgba(255,255,255,0.03); }
+        .section-title { text-align: center; font-size: 36px; font-weight: 700; margin-bottom: 50px; }
+        .section-title span { background: linear-gradient(135deg, #00d4ff, #7b2ffc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        @media (max-width: 768px) { .grid-3 { grid-template-columns: 1fr; } }
+        .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 30px 25px; transition: all 0.3s ease; text-align: center; }
+        .card:hover { background: rgba(255,255,255,0.06); transform: translateY(-5px); }
+        .card-icon { font-size: 48px; margin-bottom: 15px; }
+        .card h3 { font-size: 20px; margin-bottom: 10px; color: #fff; }
+        .card p { color: #8899aa; font-size: 16px; }
+        .card .price { font-size: 24px; font-weight: 700; color: #00d4ff; margin: 15px 0 5px; }
+        .card .price span { font-size: 16px; font-weight: 400; color: #556677; }
+        .card .btn-small { display: inline-block; margin-top: 15px; padding: 10px 30px; border-radius: 50px; font-size: 14px; font-weight: 600; background: rgba(0, 212, 255, 0.1); color: #00d4ff; text-decoration: none; border: 1px solid rgba(0, 212, 255, 0.2); transition: all 0.3s ease; }
+        .card .btn-small:hover { background: rgba(0, 212, 255, 0.2); transform: translateY(-2px); }
+        .contacts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 800px; margin: 0 auto; }
+        @media (max-width: 700px) { .contacts-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 400px) { .contacts-grid { grid-template-columns: 1fr; } }
+        .contact-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; text-align: center; transition: all 0.3s ease; text-decoration: none; color: #e0e7f0; }
+        .contact-item:hover { background: rgba(255,255,255,0.06); transform: translateY(-3px); }
+        .contact-item .icon { font-size: 32px; display: block; margin-bottom: 8px; }
+        .contact-item .label { font-size: 12px; color: #556677; margin-bottom: 5px; }
+        .contact-item .value { font-size: 14px; font-weight: 600; color: #00d4ff; }
+        .form-box { max-width: 500px; margin: 0 auto; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 40px; }
+        .form-box input, .form-box textarea { width: 100%; padding: 14px 18px; margin-bottom: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #e0e7f0; font-size: 16px; transition: all 0.3s ease; }
+        .form-box input:focus, .form-box textarea:focus { outline: none; border-color: #00d4ff; background: rgba(255,255,255,0.08); }
+        .form-box textarea { height: 100px; resize: vertical; }
+        .form-box .btn { width: 100%; }
+        .footer { padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: #445566; font-size: 14px; }
+        .footer a { color: #00d4ff; text-decoration: none; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate { animation: fadeInUp 0.8s ease forwards; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="header">
             <div class="logo">Neuro<span>Digest</span></div>
-            <div class="header-badge">🚀 creating landing pages</div>
+            <div style="display:flex; gap:15px; align-items:center; flex-wrap:wrap;">
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <a href="index.html" style="color:#8899aa; text-decoration:none; font-size:20px; transition:color 0.3s;" title="Русский" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='#8899aa'">🇷🇺</a>
+                    <a href="index_en.html" style="color:#00d4ff; text-decoration:none; font-size:20px; font-weight:700;" title="English">🇬🇧</a>
+                    <a href="index_sl.html" style="color:#8899aa; text-decoration:none; font-size:20px; transition:color 0.3s;" title="Slovenščina" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='#8899aa'">🇸🇮</a>
+                </div>
+                <div class="header-badge" style="margin-left:5px;">🚀 creating landing pages</div>
+            </div>
         </header>
 
         <section class="hero">
             <h1>I will create a sales landing page in 3 days</h1>
             <p>🔥 Bloggers, experts, startups — your personal digital assistant.<br>Landing page + Telegram bot + lead database.</p>
             <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number">3,487</div>
-                    <div class="stat-label">contacts collected</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">1,222</div>
-                    <div class="stat-label">offers sent</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">15+</div>
-                    <div class="stat-label">landing pages created</div>
-                </div>
+                <div class="stat-item"><div class="stat-number">3,487</div><div class="stat-label">contacts collected</div></div>
+                <div class="stat-item"><div class="stat-number">1,222</div><div class="stat-label">offers sent</div></div>
+                <div class="stat-item"><div class="stat-number">15+</div><div class="stat-label">landing pages created</div></div>
             </div>
             <div class="hero-buttons">
                 <a href="#services" class="btn btn-primary">💰 Order landing page</a>
@@ -41,74 +92,22 @@
         <section class="section" id="services">
             <h2 class="section-title">My <span>services</span></h2>
             <div class="grid-3">
-                <div class="card">
-                    <div class="card-icon">📄</div>
-                    <h3>Landing page</h3>
-                    <p>One-page website with your services, contacts and portfolio.</p>
-                    <div class="price">149 <span>€</span></div>
-                    <a href="#form" class="btn-small">Order</a>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🚀</div>
-                    <h3>Sales landing</h3>
-                    <p>Sales structure, triggers, forms, reviews and case studies.</p>
-                    <div class="price">299 <span>€</span></div>
-                    <a href="#form" class="btn-small">Order</a>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🤖</div>
-                    <h3>Landing + Telegram bot</h3>
-                    <p>Automatic lead collection, notifications, CRM.</p>
-                    <div class="price">499 <span>€</span></div>
-                    <a href="#form" class="btn-small">Order</a>
-                </div>
-                <div class="card">
-                    <div class="card-icon">📊</div>
-                    <h3>Contact database</h3>
-                    <p>I will collect a database of clients for your business.</p>
-                    <div class="price">199 <span>€</span></div>
-                    <a href="#form" class="btn-small">Order</a>
-                </div>
-                <div class="card">
-                    <div class="card-icon">📰</div>
-                    <h3>Ready business</h3>
-                    <p>NeuroDigest — landing + bot + digest + 3,487 contacts.</p>
-                    <div class="price">699 <span>€</span></div>
-                    <a href="#form" class="btn-small">Buy</a>
-                </div>
-                <div class="card">
-                    <div class="card-icon">⚡</div>
-                    <h3>Free consultation</h3>
-                    <p>Free analysis of your project and sales recommendations.</p>
-                    <div class="price">0 <span>€</span></div>
-                    <a href="#contacts" class="btn-small">Contact</a>
-                </div>
+                <div class="card"><div class="card-icon">📄</div><h3>Landing page</h3><p>One-page website with your services, contacts and portfolio.</p><div class="price">149 <span>€</span></div><a href="#form" class="btn-small">Order</a></div>
+                <div class="card"><div class="card-icon">🚀</div><h3>Sales landing</h3><p>Sales structure, triggers, forms, reviews and case studies.</p><div class="price">299 <span>€</span></div><a href="#form" class="btn-small">Order</a></div>
+                <div class="card"><div class="card-icon">🤖</div><h3>Landing + Telegram bot</h3><p>Automatic lead collection, notifications, CRM.</p><div class="price">499 <span>€</span></div><a href="#form" class="btn-small">Order</a></div>
+                <div class="card"><div class="card-icon">📊</div><h3>Contact database</h3><p>I will collect a database of clients for your business.</p><div class="price">199 <span>€</span></div><a href="#form" class="btn-small">Order</a></div>
+                <div class="card"><div class="card-icon">📰</div><h3>Ready business</h3><p>NeuroDigest — landing + bot + digest + 3,487 contacts.</p><div class="price">699 <span>€</span></div><a href="#form" class="btn-small">Buy</a></div>
+                <div class="card"><div class="card-icon">⚡</div><h3>Free consultation</h3><p>Free analysis of your project and sales recommendations.</p><div class="price">0 <span>€</span></div><a href="#contacts" class="btn-small">Contact</a></div>
             </div>
         </section>
 
         <section class="section" id="contacts">
             <h2 class="section-title">Contact <span>me</span></h2>
             <div class="contacts-grid">
-                <a href="mailto:korablovartem1982@gmail.com" class="contact-item">
-                    <span class="icon">📧</span>
-                    <div class="label">Email</div>
-                    <div class="value">korablovartem1982@gmail.com</div>
-                </a>
-                <a href="https://t.me/Artem201182" target="_blank" class="contact-item">
-                    <span class="icon">✈️</span>
-                    <div class="label">Telegram</div>
-                    <div class="value">@Artem201182</div>
-                </a>
-                <a href="https://wa.me/38669846579" target="_blank" class="contact-item">
-                    <span class="icon">📱</span>
-                    <div class="label">WhatsApp</div>
-                    <div class="value">+386 69 846 579</div>
-                </a>
-                <a href="https://t.me/neuro_digest_2026_bot" target="_blank" class="contact-item">
-                    <span class="icon">🤖</span>
-                    <div class="label">My bot</div>
-                    <div class="value">@neuro_digest_2026_bot</div>
-                </a>
+                <a href="mailto:korablovartem1982@gmail.com" class="contact-item"><span class="icon">📧</span><div class="label">Email</div><div class="value">korablovartem1982@gmail.com</div></a>
+                <a href="https://t.me/Artem201182" target="_blank" class="contact-item"><span class="icon">✈️</span><div class="label">Telegram</div><div class="value">@Artem201182</div></a>
+                <a href="https://wa.me/38669846579" target="_blank" class="contact-item"><span class="icon">📱</span><div class="label">WhatsApp</div><div class="value">+386 69 846 579</div></a>
+                <a href="https://t.me/neuro_digest_2026_bot" target="_blank" class="contact-item"><span class="icon">🤖</span><div class="label">My bot</div><div class="value">@neuro_digest_2026_bot</div></a>
             </div>
         </section>
 

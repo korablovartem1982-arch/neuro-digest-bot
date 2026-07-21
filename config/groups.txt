@@ -9,3 +9,6 @@ https://t.me/business_chat
 https://t.me/ai_chat
 https://t.me/tech_news
 https://t.me/startup_discussion
+https://t.me/ai_news
+https://t.me/tech_trends
+https://t.me/startup_europe
